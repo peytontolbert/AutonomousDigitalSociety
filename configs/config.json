@@ -1,0 +1,10 @@
+{
+    "logging_level": "INFO",
+    "persona": {
+        "default_name": "DefaultPersona",
+        "default_background": "DefaultBackground",
+        "default_interests": ["DefaultInterest1", "DefaultInterest2"]
+    },
+    "current_persona": "DefaultPersona"
+}
+

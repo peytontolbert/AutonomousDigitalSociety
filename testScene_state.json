@@ -1,0 +1,57 @@
+{
+    "scene_name": "TestScene",
+    "characters": [
+        {
+            "name": "Character1",
+            "role": "Protagonist",
+            "actions": [
+                "Sent a message in #general: 'Hello, I'm excited to be part of the group.'",
+                "Sent a DM to Character2: 'Hey, can we discuss the project?'",
+                "Created a file: 'project_notes.txt'"
+            ],
+            "file_system": [
+                "Character1_notes.txt",
+                "project_notes.txt",
+                "shared_project/project_notes.txt"
+            ]
+        },
+        {
+            "name": "Character2",
+            "role": "Antagonist",
+            "actions": [
+                "Responded in #general: 'Welcome to the group!'",
+                "Sent a DM to Character1: 'Sure, let's discuss.'",
+                "Edited a file: 'project_notes.txt'"
+            ],
+            "file_system": [
+                "Character2_notes.txt",
+                "project_notes.txt",
+                "shared_project/project_notes.txt"
+            ]
+        },
+        {
+            "name": "Character3",
+            "role": "Support",
+            "actions": [
+                "Joined the #general channel.",
+                "Sent a message in #general: 'Hi everyone, I'm here to help!'",
+                "Reviewed the file: 'project_notes.txt'"
+            ],
+            "file_system": [
+                "Character3_notes.txt",
+                "project_notes.txt",
+                "shared_project/project_notes.txt"
+            ]
+        }
+    ],
+    "events": [
+        "Character1 and Character2 had a conversation about the project."
+    ],
+    "messages": [
+        "#general: Character1: 'Hello, I'm excited to be part of the group.'",
+        "#general: Character2: 'Welcome to the group!'",
+        "#general: Character3: 'Hi everyone, I'm here to help!'",
+        "DM: Character1 to Character2: 'Hey, can we discuss the project?'",
+        "DM: Character2 to Character1: 'Sure, let's discuss.'"
+    ]
+}

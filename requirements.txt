@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+requests
+flask
+django
+openai
+python-dotenv
+
+flask_sqlalchemy
+flask_login
+flask_migrate

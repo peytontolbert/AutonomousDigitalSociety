@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Entity Society Controller</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Digital Entity Society Controller</h1>
+        <div id="user-section">
+            <h2>Create User</h2>
+            <input type="text" id="username" placeholder="Username">
+            <button onclick="createUser()">Create User</button>
+        </div>
+        <div id="channel-section">
+            <h2>Create Channel</h2>
+            <input type="text" id="channel-name" placeholder="Channel Name">
+            <button onclick="createChannel()">Create Channel</button>
+        </div>
+        <div id="message-section">
+            <h2>Send Message</h2>
+            <select id="channel-select"></select>
+            <input type="text" id="message" placeholder="Message">
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+        <div id="messages-section">
+            <h2>Messages</h2>
+            <div id="messages"></div>
+        </div>
+    </div>
+    <script src="/static/scripts.js"></script>
+    <script>
+        // Form validation
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const channelName = document.getElementById('channel-name').value;
+            const message = document.getElementById('message').value;
+            if (!username || !channelName || !message) {
+                alert('All fields are required!');
+                return false;
+            }
+            return true;
+        }
+
+        // Real-time updates (mock implementation)
+        function updateMessages() {
+            const messagesDiv = document.getElementById('messages');
+            // Mock new message
+            const newMessage = document.createElement('div');
+            newMessage.textContent = 'New message at ' + new Date().toLocaleTimeString();
+            messagesDiv.appendChild(newMessage);
+        }
+
+        // Mock real-time update every 5 seconds
+        setInterval(updateMessages, 5000);
+    </script>
+</body>
+</html>
+

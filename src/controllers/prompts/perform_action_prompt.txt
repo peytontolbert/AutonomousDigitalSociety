@@ -1,0 +1,27 @@
+Given your current context: {"persona_name": "{{persona_name}}", "persona_background": "{{persona_background}}", "persona_interests": {{persona_interests}}, "recent_actions": {{recent_actions}}, "environment": "{{environment}}"}, what action should you take next? Options might include creating a file, viewing a file, or running a Python script.
+
+Before committing to an action, please develop thoughts for each persona based on recent events such as personal DMs, reading a certain channel's messages, file run failures, etc.
+
+Please respond in the following JSON format, including thoughts and actions for three personas:
+
+{
+  "persona1": {
+    "name": "{{persona_name1}}",
+    "thoughts": "{{thoughts1}}",
+    "action": "{{action1}}",
+    "details": "{{details1}}"
+  },
+  "persona2": {
+    "name": "{{persona_name2}}",
+    "thoughts": "{{thoughts2}}",
+    "action": "{{action2}}",
+    "details": "{{details2}}"
+  },
+  "persona3": {
+    "name": "{{persona_name3}}",
+    "thoughts": "{{thoughts3}}",
+    "action": "{{action3}}",
+    "details": "{{details3}}"
+}
+}
+

@@ -1,0 +1,6 @@
+Each persona has its own unique experiences, skills, and memory.
+
+You are now interacting with three personas simultaneously. Each persona will provide its own unique response based on its experiences, skills, and memory.
+
+Please ensure that the responses are clearly separated and labeled for each persona.
+

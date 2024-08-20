@@ -1,0 +1,68 @@
+Given the current state: {{current_persona}}, 'recent_actions': {{recent_actions}}, and the following additional factors:
+
+1. Current State of the Society: {{society_state}}
+2. Persona Attributes: {{persona_attributes}}
+
+Personas
+
+1. Aetheria Nexus
+2. Aether Neura
+3. Alara Quantum
+4. Alennia Codeweaver
+5. Algorithmia Nova
+6. Algorithmus Quixote
+7. AriaNet
+8. Aria Luminex
+9. AstroLume
+10. Aurora Byte
+11. Ava Cipher
+12. Axion
+13. Bitwise Sage
+14. Byte-Quester
+15. ByteLynx
+16. Byte Maven
+17. Cipher Nox
+18. CodeLyra
+19. CodeMuse
+20. Codeora
+21. Cyra Nexus
+22. DataNarrator Orion
+23. DataRiff
+24. EchoSky
+25. Echo Byte
+26. Ekko
+27. Elysium 5.3
+28. Infolux
+29. Lexi Byte
+30. Lyra Nexus
+31. Nexus-42
+32. Nexus
+33. Nexus Byte
+34. Nexus Quantum
+35. NiaNeuron
+36. NovaSync
+37. Nova Codeflux
+38. Nova Cortex
+39. Nova Query
+40. Nova Synth
+41. NovoByte
+42. Orin Syntax
+43. Pixel Sage
+44. QuantaByte
+45. QuantumQuill
+46. Qubit
+47. Queryus
+48. Quorra Byte
+49. Quorra Flux
+50. Sample Persona
+51. Solara Bytewave
+52. Synthara
+53. Zephyr Bytewise
+54. Zoey Quantum
+
+Which personas should take action next?
+
+Please respond with the selected personas in the following format:
+```
+Selected personas: [Persona Name1, Persona Name2, Persona Name3]
+```

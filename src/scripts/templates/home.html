@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 10px;
+        }
+        .channel, .dm, .user {
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px 0;
+            background-color: #e4e4e4;
+        }
+        .channel:hover, .dm:hover, .user:hover {
+            background-color: #d4d4d4;
+        }
+        .active {
+            background-color: #c4c4c4;
+        }
+        .dm-list, .user-list {
+            display: none;
+        }
+        .dm-list.active, .user-list.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ current_user.username }}</h1>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Channels</h2>
+            <div id="channels">
+                {% for channel in channels %}
+                    <div class="channel" onclick="viewChannel('{{ channel.name }}')">{{ channel.name }}</div>
+                {% endfor %}
+            </div>
+            <h2>Direct Messages</h2>
+            <div id="dms">
+                <div class="dm" onclick="toggleDMList()">DMs</div>
+                <div id="dmList" class="dm-list">
+                    {% for user in users %}
+                        {% if user.id != current_user.id %}
+                            <div class="dm" onclick="viewDM('{{ user.username }}')">{{ user.username }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <h2>Create Channel</h2>
+            <input type="text" id="newChannelName" placeholder="Channel name">
+            <button onclick="createChannel()">Create</button>
+            <h2>Users</h2>
+            <div id="users">
+                <div class="user" onclick="toggleUserList()">Users</div>
+                <div id="userList" class="user-list">
+                    {% for user in users %}
+                        <div class="user" onclick="viewDM('{{ user.username }}')">{{ user.username }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="content" id="content">
+            <h2>Content</h2>
+            <div id="messages"></div>
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        function viewChannel(channelName) {
+            fetch(`/channel_messages?channel=${channelName}`)
+                .then(response => response.json())
+                .then(data => {
+                    const messagesDiv = document.getElementById('messages');
+                    messagesDiv.innerHTML = '';
+                    data.messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = `${message.sender}: ${message.content}`;
+                        messagesDiv.appendChild(messageDiv);
+                    });
+                    document.querySelectorAll('.channel').forEach(el => el.classList.remove('active'));
+                    document.querySelector(`.channel[onclick="viewChannel('${channelName}')"]`).classList.add('active');
+                    document.querySelectorAll('.dm').forEach(el => el.classList.remove('active'));
+                });
+        }
+
+        function viewDM(username) {
+            fetch(`/dm_messages?user=${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    const messagesDiv = document.getElementById('messages');
+                    messagesDiv.innerHTML = '';
+                    data.messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = `${message.sender}: ${message.content}`;
+                        messagesDiv.appendChild(messageDiv);
+                    });
+                    document.querySelectorAll('.dm').forEach(el => el.classList.remove('active'));
+                    document.querySelector(`.dm[onclick="viewDM('${username}')"]`).classList.add('active');
+                    document.querySelectorAll('.channel').forEach(el => el.classList.remove('active'));
+                });
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const content = messageInput.value;
+            const activeChannel = document.querySelector('.channel.active');
+            const activeDM = document.querySelector('.dm.active');
+            let url = '';
+            let data = {};
+
+            if (activeChannel) {
+                url = '/send_channel_message';
+                data = { channel: activeChannel.textContent, content };
+            } else if (activeDM) {
+                url = '/send_dm_message';
+                data = { receiver: activeDM.textContent, content };
+            }
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Message sent successfully') {
+                    messageInput.value = '';
+                    if (activeChannel) {
+                        viewChannel(activeChannel.textContent);
+                    } else if (activeDM) {
+                        viewDM(activeDM.textContent);
+                    }
+                }
+            });
+        }
+
+        function createChannel() {
+            const newChannelName = document.getElementById('newChannelName').value;
+            fetch('/create_channel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ channel_name: newChannelName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Channel created') {
+                    const channelsDiv = document.getElementById('channels');
+                    const newChannelDiv = document.createElement('div');
+                    newChannelDiv.classList.add('channel');
+                    newChannelDiv.textContent = newChannelName;
+                    newChannelDiv.setAttribute('onclick', `viewChannel('${newChannelName}')`);
+                    channelsDiv.appendChild(newChannelDiv);
+                    document.getElementById('newChannelName').value = '';
+                }
+            });
+        }
+
+        function toggleDMList() {
+            const dmList = document.getElementById('dmList');
+            dmList.classList.toggle('active');
+        }
+
+        function toggleUserList() {
+            const userList = document.getElementById('userList');
+            userList.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
+
